@@ -212,7 +212,7 @@ const App = () => {
     const cellsToHighlight = hoveredCageIndex !== null ? cages[hoveredCageIndex].cells : [];
 
     return (
-        <div className="min-h-screen text-white flex flex-col items-center justify-center p-4 font-sans">
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 to-blue-900 text-white flex flex-col items-center justify-center p-4">
             <main className="flex flex-col md:flex-row gap-8 w-full max-w-6xl">
                 <div className="flex-grow flex justify-center items-start">
                     <div className="grid grid-cols-9 relative sudoku-grid">
@@ -227,10 +227,11 @@ const App = () => {
                                     <div
                                         key={`${r}-${c}`}
                                         onClick={() => handleCellClick(r, c)}
-                                        className={`sudoku-cell
-                                            ${isSelected ? 'selected' : ''}
-                                            ${isHighlighted ? 'highlighted' : ''}
-                                        `}
+                                        className={`sudoku-cell ${
+                                            isSelected ? 'selected' : ''
+                                        } ${
+                                            isHighlighted ? 'highlighted' : ''
+                                        }`}
                                         style={{ backgroundColor: isSelected ? undefined : cageInfo?.color, ...getBorders(r,c) }}
                                     >
                                         {cageSum && <span className="cage-sum">{cageSum}</span>}
@@ -255,21 +256,21 @@ const App = () => {
                     </div>
                 </div>
 
-                <div className="w-full md:w-96 p-6 control-panel shadow-2xl">
-                    <h1 className="text-4xl font-bold mb-6 text-center bg-gradient-to-r from-blue-400 via-purple-500 to-blue-600 bg-clip-text text-transparent">
-                        ⚔️ Killer Sudoku
+                <div className="w-full md:w-96 p-6 bg-gray-800 rounded-lg shadow-lg">
+                    <h1 className="text-3xl font-bold mb-6 text-center text-white">
+                        Killer Sudoku
                     </h1>
                     
                     <div className="space-y-4 mb-6">
                         <button 
                             onClick={handleAddOrUpdateCage}
-                            className="w-full glass-button text-white font-bold py-3 px-4 rounded-lg shadow-lg"
+                            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-500 text-white font-bold py-2 px-4 rounded transition-colors"
                             disabled={isLoading || currentSelection.length === 0}
                         >
                             {editingCageIndex !== null ? 'Aggiorna Gabbia' : 'Aggiungi Gabbia'}
                         </button>
                         {editingCageIndex !== null && (
-                            <button onClick={handleCancelEdit} className="w-full glass-button text-white font-bold py-3 px-4 rounded-lg shadow-lg" style={{background: 'linear-gradient(145deg, rgba(107, 114, 128, 0.8), rgba(75, 85, 99, 0.8))'}}>
+                            <button onClick={handleCancelEdit} className="w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition-colors">
                                 Annulla Modifica
                             </button>
                         )}
@@ -279,7 +280,7 @@ const App = () => {
                         {cages.map((cage, index) => (
                             <div 
                                 key={index}
-                                className="cage-item flex items-center justify-between p-3 mb-2"
+                                className="flex items-center justify-between p-2 bg-gray-700 rounded mb-2"
                                 onMouseEnter={() => setHoveredCageIndex(index)}
                                 onMouseLeave={() => setHoveredCageIndex(null)}
                             >
@@ -297,26 +298,26 @@ const App = () => {
 
                     <div className="space-y-4">
                         <div className="flex items-center space-x-2">
-                            <select value={solveMode} onChange={(e) => setSolveMode(e.target.value as 'instant' | 'step')} className="bg-gray-700 bg-opacity-80 backdrop-filter backdrop-blur-lg text-white p-3 rounded-lg w-full border border-gray-600 focus:border-blue-400 outline-none transition-colors">
-                                <option value="instant">⚡ Risoluzione Immediata</option>
-                                <option value="step">👣 Passo Dopo Passo</option>
+                            <select value={solveMode} onChange={(e) => setSolveMode(e.target.value as 'instant' | 'step')} className="bg-gray-700 text-white p-2 rounded w-full">
+                                <option value="instant">Risoluzione Immediata</option>
+                                <option value="step">Passo Dopo Passo</option>
                             </select>
-                            <button onClick={handleSolve} disabled={isLoading || cages.length === 0} className="p-3 glass-button rounded-lg transition-colors" style={{background: 'linear-gradient(145deg, rgba(34, 197, 94, 0.8), rgba(22, 163, 74, 0.8))'}}><MagicWandIcon className="w-6 h-6"/></button>
+                            <button onClick={handleSolve} disabled={isLoading || cages.length === 0} className="p-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-500 rounded transition-colors"><MagicWandIcon className="w-6 h-6"/></button>
                         </div>
                         
                         {isLoading && <Spinner />}
                         {error && <p className="text-red-400 bg-red-900 bg-opacity-50 p-2 rounded-md text-sm">{error}</p>}
                         
                         {solution && solveMode === 'step' && (
-                            <div className="bg-gray-800 bg-opacity-60 backdrop-filter backdrop-blur-lg p-4 rounded-lg border border-gray-600">
+                            <div className="bg-gray-700 p-3 rounded">
                                 <p className="text-center mb-2">Svelati: {revealedCells.length} / 81</p>
                                 <div className="flex space-x-2">
-                                    <button onClick={handleStep} disabled={revealedCells.length >= 81} className="w-full glass-button flex items-center justify-center gap-2 py-3 px-4 rounded-lg" style={{background: 'linear-gradient(145deg, rgba(99, 102, 241, 0.8), rgba(79, 70, 229, 0.8))'}}><StepForwardIcon className="w-5 h-5"/>Prossimo</button>
-                                    <button onClick={handleRevealAll} className="w-full glass-button flex items-center justify-center gap-2 py-3 px-4 rounded-lg" style={{background: 'linear-gradient(145deg, rgba(147, 51, 234, 0.8), rgba(126, 34, 206, 0.8))'}}><EyeIcon className="w-5 h-5"/>Rivela Tutto</button>
+                                    <button onClick={handleStep} disabled={revealedCells.length >= 81} className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-500 flex items-center justify-center gap-2 py-2 px-4 rounded transition-colors"><StepForwardIcon className="w-5 h-5"/>Prossimo</button>
+                                    <button onClick={handleRevealAll} className="w-full bg-purple-600 hover:bg-purple-700 flex items-center justify-center gap-2 py-2 px-4 rounded transition-colors"><EyeIcon className="w-5 h-5"/>Rivela Tutto</button>
                                 </div>
                             </div>
                         )}
-                        <button onClick={handleClear} className="w-full glass-button text-white font-bold py-3 px-4 rounded-lg" style={{background: 'linear-gradient(145deg, rgba(239, 68, 68, 0.8), rgba(220, 38, 38, 0.8))'}}>
+                        <button onClick={handleClear} className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition-colors">
                             Pulisci Tutto
                         </button>
                     </div>
