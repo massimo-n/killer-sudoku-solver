@@ -215,7 +215,7 @@ const App = () => {
         <div className="min-h-screen bg-gradient-to-br from-gray-900 to-blue-900 text-white flex flex-col items-center justify-center p-4 font-sans">
             <main className="flex flex-col md:flex-row gap-8 w-full max-w-6xl">
                 <div className="flex-grow flex justify-center items-start">
-                    <div className="grid grid-cols-9 relative">
+                    <div className="grid grid-cols-9 relative sudoku-grid">
                         {grid.map((row, r) =>
                             row.map((cell, c) => {
                                 const cageInfo = getCageForCell(r, c);
@@ -227,13 +227,13 @@ const App = () => {
                                     <div
                                         key={`${r}-${c}`}
                                         onClick={() => handleCellClick(r, c)}
-                                        className={`w-12 h-12 md:w-14 md:h-14 flex justify-center items-center text-2xl font-bold cursor-pointer relative transition-all duration-200
+                                        className={`sudoku-cell w-12 h-12 md:w-14 md:h-14 flex justify-center items-center text-2xl font-bold cursor-pointer relative transition-all duration-200
                                             ${r % 3 === 2 && r !== 8 ? 'border-b-4 border-gray-400' : 'border-b border-gray-600'}
                                             ${c % 3 === 2 && c !== 8 ? 'border-r-4 border-gray-400' : 'border-r border-gray-600'}
                                             ${r === 0 ? 'border-t border-gray-600' : ''}
                                             ${c === 0 ? 'border-l border-gray-600' : ''}
-                                            ${isSelected ? 'bg-blue-400 bg-opacity-50' : ''}
-                                            ${isHighlighted ? 'bg-yellow-400 bg-opacity-40' : ''}
+                                            ${isSelected ? 'bg-blue-400 bg-opacity-50 selected' : ''}
+                                            ${isHighlighted ? 'bg-yellow-400 bg-opacity-40 highlighted' : ''}
                                         `}
                                         style={{ backgroundColor: isSelected ? undefined : cageInfo?.color, ...getBorders(r,c) }}
                                     >
