@@ -212,7 +212,7 @@ const App = () => {
     const cellsToHighlight = hoveredCageIndex !== null ? cages[hoveredCageIndex].cells : [];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-900 to-blue-900 text-white flex flex-col items-center justify-center p-4 font-sans">
+        <div className="min-h-screen text-white flex flex-col items-center justify-center p-4 font-sans">
             <main className="flex flex-col md:flex-row gap-8 w-full max-w-6xl">
                 <div className="flex-grow flex justify-center items-start">
                     <div className="grid grid-cols-9 relative sudoku-grid">
@@ -227,17 +227,13 @@ const App = () => {
                                     <div
                                         key={`${r}-${c}`}
                                         onClick={() => handleCellClick(r, c)}
-                                        className={`sudoku-cell w-12 h-12 md:w-14 md:h-14 flex justify-center items-center text-2xl font-bold cursor-pointer relative transition-all duration-200
-                                            ${r % 3 === 2 && r !== 8 ? 'border-b-4 border-gray-400' : 'border-b border-gray-600'}
-                                            ${c % 3 === 2 && c !== 8 ? 'border-r-4 border-gray-400' : 'border-r border-gray-600'}
-                                            ${r === 0 ? 'border-t border-gray-600' : ''}
-                                            ${c === 0 ? 'border-l border-gray-600' : ''}
-                                            ${isSelected ? 'bg-blue-400 bg-opacity-50 selected' : ''}
-                                            ${isHighlighted ? 'bg-yellow-400 bg-opacity-40 highlighted' : ''}
+                                        className={`sudoku-cell
+                                            ${isSelected ? 'selected' : ''}
+                                            ${isHighlighted ? 'highlighted' : ''}
                                         `}
                                         style={{ backgroundColor: isSelected ? undefined : cageInfo?.color, ...getBorders(r,c) }}
                                     >
-                                        {cageSum && <span className="absolute top-0 left-1 text-xs font-normal">{cageSum}</span>}
+                                        {cageSum && <span className="cage-sum">{cageSum}</span>}
                                         {cell !== 0 && <span>{cell}</span>}
 
                                         {inlineInputPos && inlineInputPos.row === r && inlineInputPos.col === c && (
@@ -248,7 +244,7 @@ const App = () => {
                                                     value={inlineSum}
                                                     onChange={e => setInlineSum(e.target.value)}
                                                     onKeyDown={e => e.key === 'Enter' && handleAddOrUpdateCage()}
-                                                    className="w-full h-full bg-black bg-opacity-70 text-white text-center text-lg outline-none"
+                                                    className="inline-input"
                                                 />
                                             </div>
                                         )}
@@ -259,19 +255,21 @@ const App = () => {
                     </div>
                 </div>
 
-                <div className="w-full md:w-96 p-6 rounded-xl bg-gray-800 bg-opacity-40 backdrop-filter backdrop-blur-lg border border-gray-700 shadow-2xl">
-                    <h1 className="text-3xl font-bold mb-6 text-center">Killer Sudoku</h1>
+                <div className="w-full md:w-96 p-6 control-panel shadow-2xl">
+                    <h1 className="text-4xl font-bold mb-6 text-center bg-gradient-to-r from-blue-400 via-purple-500 to-blue-600 bg-clip-text text-transparent">
+                        ⚔️ Killer Sudoku
+                    </h1>
                     
                     <div className="space-y-4 mb-6">
                         <button 
                             onClick={handleAddOrUpdateCage}
-                            className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg transition transform hover:scale-105 active:scale-95 shadow-lg"
+                            className="w-full glass-button text-white font-bold py-3 px-4 rounded-lg shadow-lg"
                             disabled={isLoading || currentSelection.length === 0}
                         >
                             {editingCageIndex !== null ? 'Aggiorna Gabbia' : 'Aggiungi Gabbia'}
                         </button>
                         {editingCageIndex !== null && (
-                            <button onClick={handleCancelEdit} className="w-full bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg transition transform hover:scale-105 active:scale-95 shadow-lg">
+                            <button onClick={handleCancelEdit} className="w-full glass-button text-white font-bold py-3 px-4 rounded-lg shadow-lg" style={{background: 'linear-gradient(145deg, rgba(107, 114, 128, 0.8), rgba(75, 85, 99, 0.8))'}}>
                                 Annulla Modifica
                             </button>
                         )}
@@ -281,7 +279,7 @@ const App = () => {
                         {cages.map((cage, index) => (
                             <div 
                                 key={index}
-                                className="flex items-center justify-between p-2 rounded-md mb-2 bg-gray-700 bg-opacity-50"
+                                className="cage-item flex items-center justify-between p-3 mb-2"
                                 onMouseEnter={() => setHoveredCageIndex(index)}
                                 onMouseLeave={() => setHoveredCageIndex(null)}
                             >
@@ -299,26 +297,28 @@ const App = () => {
 
                     <div className="space-y-4">
                         <div className="flex items-center space-x-2">
-                            <select value={solveMode} onChange={(e) => setSolveMode(e.target.value as 'instant' | 'step')} className="bg-gray-700 text-white p-2 rounded-md w-full">
-                                <option value="instant">Risoluzione Immediata</option>
-                                <option value="step">Passo Dopo Passo</option>
+                            <select value={solveMode} onChange={(e) => setSolveMode(e.target.value as 'instant' | 'step')} className="bg-gray-700 bg-opacity-80 backdrop-filter backdrop-blur-lg text-white p-3 rounded-lg w-full border border-gray-600 focus:border-blue-400 outline-none transition-colors">
+                                <option value="instant">⚡ Risoluzione Immediata</option>
+                                <option value="step">👣 Passo Dopo Passo</option>
                             </select>
-                            <button onClick={handleSolve} disabled={isLoading || cages.length === 0} className="p-2 bg-green-600 hover:bg-green-700 rounded-md disabled:bg-gray-500 transition-colors"><MagicWandIcon className="w-6 h-6"/></button>
+                            <button onClick={handleSolve} disabled={isLoading || cages.length === 0} className="p-3 glass-button rounded-lg transition-colors" style={{background: 'linear-gradient(145deg, rgba(34, 197, 94, 0.8), rgba(22, 163, 74, 0.8))'}}><MagicWandIcon className="w-6 h-6"/></button>
                         </div>
                         
                         {isLoading && <Spinner />}
                         {error && <p className="text-red-400 bg-red-900 bg-opacity-50 p-2 rounded-md text-sm">{error}</p>}
                         
                         {solution && solveMode === 'step' && (
-                            <div className="bg-black bg-opacity-20 p-3 rounded-lg">
+                            <div className="bg-gray-800 bg-opacity-60 backdrop-filter backdrop-blur-lg p-4 rounded-lg border border-gray-600">
                                 <p className="text-center mb-2">Svelati: {revealedCells.length} / 81</p>
                                 <div className="flex space-x-2">
-                                    <button onClick={handleStep} disabled={revealedCells.length >= 81} className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-500 py-2 px-4 rounded-lg transition-colors"><StepForwardIcon className="w-5 h-5"/>Prossimo</button>
-                                    <button onClick={handleRevealAll} className="w-full flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 py-2 px-4 rounded-lg transition-colors"><EyeIcon className="w-5 h-5"/>Rivela Tutto</button>
+                                    <button onClick={handleStep} disabled={revealedCells.length >= 81} className="w-full glass-button flex items-center justify-center gap-2 py-3 px-4 rounded-lg" style={{background: 'linear-gradient(145deg, rgba(99, 102, 241, 0.8), rgba(79, 70, 229, 0.8))'}}><StepForwardIcon className="w-5 h-5"/>Prossimo</button>
+                                    <button onClick={handleRevealAll} className="w-full glass-button flex items-center justify-center gap-2 py-3 px-4 rounded-lg" style={{background: 'linear-gradient(145deg, rgba(147, 51, 234, 0.8), rgba(126, 34, 206, 0.8))'}}><EyeIcon className="w-5 h-5"/>Rivela Tutto</button>
                                 </div>
                             </div>
                         )}
-                        <button onClick={handleClear} className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">Pulisci Tutto</button>
+                        <button onClick={handleClear} className="w-full glass-button text-white font-bold py-3 px-4 rounded-lg" style={{background: 'linear-gradient(145deg, rgba(239, 68, 68, 0.8), rgba(220, 38, 38, 0.8))'}}>
+                            Pulisci Tutto
+                        </button>
                     </div>
                 </div>
             </main>
