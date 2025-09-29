@@ -153,39 +153,77 @@ body::before {
 
 .sudoku-cell.selected {
   background: 
-    linear-gradient(145deg, rgba(0, 255, 255, 0.8), rgba(0, 150, 255, 0.8)) !important;
+    linear-gradient(145deg, rgba(0, 255, 255, 0.95), rgba(0, 200, 255, 0.95)) !important;
   color: #000 !important;
-  transform: translateY(-5px) scale(1.1);
+  transform: translateY(-5px) scale(1.1) !important;
   box-shadow: 
-    0 0 30px rgba(0, 255, 255, 0.8),
-    0 0 60px rgba(0, 255, 255, 0.4),
-    0 15px 35px rgba(0, 255, 255, 0.3);
-  border-color: rgba(0, 255, 255, 1);
+    0 0 30px rgba(0, 255, 255, 0.9),
+    0 0 60px rgba(0, 255, 255, 0.6),
+    0 15px 35px rgba(0, 255, 255, 0.4),
+    inset 0 0 20px rgba(255, 255, 255, 0.3) !important;
+  border: 3px solid rgba(0, 255, 255, 1) !important;
   animation: selected-pulse 2s ease-in-out infinite;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  z-index: 10;
+  position: relative;
 }
 
 @keyframes selected-pulse {
-  0%, 100% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.8), 0 0 60px rgba(0, 255, 255, 0.4); }
-  50% { box-shadow: 0 0 50px rgba(0, 255, 255, 1), 0 0 100px rgba(0, 255, 255, 0.6); }
+  0%, 100% { 
+    box-shadow: 
+      0 0 30px rgba(0, 255, 255, 0.9),
+      0 0 60px rgba(0, 255, 255, 0.6),
+      0 15px 35px rgba(0, 255, 255, 0.4);
+    transform: translateY(-5px) scale(1.1);
+  }
+  50% { 
+    box-shadow: 
+      0 0 50px rgba(0, 255, 255, 1),
+      0 0 100px rgba(0, 255, 255, 0.8),
+      0 20px 40px rgba(0, 255, 255, 0.5);
+    transform: translateY(-7px) scale(1.12);
+  }
 }
 
 .sudoku-cell.highlighted {
   background: 
-    linear-gradient(145deg, rgba(255, 215, 0, 0.9), rgba(255, 140, 0, 0.9)) !important;
+    linear-gradient(145deg, rgba(255, 215, 0, 0.95), rgba(255, 140, 0, 0.95)) !important;
   color: #000 !important;
-  transform: translateY(-3px) scale(1.08);
+  transform: translateY(-3px) scale(1.08) !important;
   animation: highlight-dance 1.5s ease-in-out infinite;
   box-shadow: 
-    0 0 25px rgba(255, 215, 0, 0.8),
-    0 10px 25px rgba(255, 140, 0, 0.4);
+    0 0 30px rgba(255, 215, 0, 0.9),
+    0 0 50px rgba(255, 140, 0, 0.6),
+    0 10px 25px rgba(255, 140, 0, 0.4),
+    inset 0 0 15px rgba(255, 255, 255, 0.4) !important;
+  border: 3px solid rgba(255, 215, 0, 1) !important;
   text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+  z-index: 8;
+  position: relative;
 }
 
 @keyframes highlight-dance {
-  0%, 100% { transform: translateY(-3px) scale(1.08) rotate(0deg); }
-  25% { transform: translateY(-5px) scale(1.1) rotate(1deg); }
-  75% { transform: translateY(-1px) scale(1.06) rotate(-1deg); }
+  0%, 100% { 
+    transform: translateY(-3px) scale(1.08) rotate(0deg);
+    box-shadow: 
+      0 0 30px rgba(255, 215, 0, 0.9),
+      0 0 50px rgba(255, 140, 0, 0.6),
+      0 10px 25px rgba(255, 140, 0, 0.4);
+  }
+  25% { 
+    transform: translateY(-6px) scale(1.12) rotate(2deg);
+    box-shadow: 
+      0 0 40px rgba(255, 215, 0, 1),
+      0 0 70px rgba(255, 140, 0, 0.8),
+      0 15px 30px rgba(255, 140, 0, 0.5);
+  }
+  75% { 
+    transform: translateY(-2px) scale(1.06) rotate(-2deg);
+    box-shadow: 
+      0 0 35px rgba(255, 215, 0, 0.95),
+      0 0 60px rgba(255, 140, 0, 0.7),
+      0 12px 28px rgba(255, 140, 0, 0.45);
+  }
 }
 
 /* 🌟 EPIC 3x3 SECTION BORDERS 🌟 */
@@ -373,7 +411,20 @@ body::before {
   50% { background-position: 100% 50%; }
 }
 
-/* 📱 EPIC RESPONSIVE 📱 */
+/* � DEBUG STYLES 🔧 */
+.sudoku-cell.debug-selected {
+  background: red !important;
+  color: white !important;
+  border: 5px solid yellow !important;
+}
+
+.sudoku-cell.debug-highlighted {
+  background: green !important;
+  color: white !important;
+  border: 5px solid orange !important;
+}
+
+/* �📱 EPIC RESPONSIVE 📱 */
 @media (min-width: 768px) {
   .sudoku-cell {
     width: 58px;

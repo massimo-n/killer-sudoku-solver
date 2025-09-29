@@ -231,10 +231,13 @@ const App = () => {
                                         key={`${r}-${c}`}
                                         onClick={() => handleCellClick(r, c)}
                                         className={`sudoku-cell
-                                            ${isSelected ? 'selected' : ''}
-                                            ${isHighlighted ? 'highlighted' : ''}
+                                            ${isSelected ? 'selected debug-selected' : ''}
+                                            ${isHighlighted ? 'highlighted debug-highlighted' : ''}
                                         `}
-                                        style={{ backgroundColor: isSelected ? undefined : cageInfo?.color, ...getBorders(r,c) }}
+                                        style={{ 
+                                            backgroundColor: isSelected || isHighlighted ? undefined : cageInfo?.color,
+                                            ...getBorders(r,c) 
+                                        }}
                                     >
                                         {cageSum && <span className="cage-sum">{cageSum}</span>}
                                         {cell !== 0 && <span>{cell}</span>}
