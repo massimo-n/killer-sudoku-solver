@@ -230,10 +230,7 @@ const App = () => {
                                     <div
                                         key={`${r}-${c}`}
                                         onClick={() => handleCellClick(r, c)}
-                                        className={`sudoku-cell
-                                            ${isSelected ? 'selected debug-selected' : ''}
-                                            ${isHighlighted ? 'highlighted debug-highlighted' : ''}
-                                        `}
+                                        className={`sudoku-cell${isSelected ? ' selected' : ''}${isHighlighted ? ' highlighted' : ''}`}
                                         style={{ 
                                             backgroundColor: isSelected || isHighlighted ? undefined : cageInfo?.color,
                                             ...getBorders(r,c) 

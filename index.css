@@ -447,3 +447,22 @@ body::before {
     font-size: 4rem;
   }
 }
+
+/* 🎯 EXTRA STRONG SELECTION STYLES 🎯 */
+.sudoku-cell.selected {
+  background: cyan !important;
+  color: black !important;
+  border: 4px solid cyan !important;
+  box-shadow: 0 0 30px cyan !important;
+  transform: scale(1.15) !important;
+  z-index: 999 !important;
+}
+
+.sudoku-cell.highlighted {
+  background: gold !important;
+  color: black !important;
+  border: 4px solid gold !important;
+  box-shadow: 0 0 30px gold !important;
+  transform: scale(1.1) !important;
+  z-index: 998 !important;
+}
