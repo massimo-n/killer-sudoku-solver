@@ -1,414 +1,189 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* 🚀 EPIC KILLER SUDOKU STYLES 🚀 */
+/* 🎯 CLEAN MODERN KILLER SUDOKU 🎯 */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* Control Panel */
+.control-panel {
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+}
+
 body {
-  font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: 
-    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
-    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%),
-    linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
-  background-attachment: fixed;
-  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f8fafc;
+  color: #1f2937;
   min-height: 100vh;
-  overflow-x: hidden;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: 
-    radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.03) 0%, transparent 70%);
-  animation: cosmic-pulse 8s ease-in-out infinite;
-  pointer-events: none;
-  z-index: -1;
-}
-
-@keyframes cosmic-pulse {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.1); }
 }
 
 #root {
   min-height: 100vh;
-  position: relative;
 }
 
-/* 🎯 EPIC SUDOKU GRID 🎯 */
+/* 🎯 CLEAN SUDOKU GRID 🎯 */
 .sudoku-grid {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
-  gap: 3px;
-  background: 
-    linear-gradient(145deg, rgba(30, 30, 60, 0.8), rgba(60, 60, 100, 0.8)),
-    radial-gradient(circle at center, rgba(0, 255, 255, 0.1), transparent);
-  border-radius: 20px;
-  padding: 15px;
-  backdrop-filter: blur(20px);
-  border: 2px solid rgba(0, 255, 255, 0.3);
-  box-shadow: 
-    0 0 50px rgba(0, 255, 255, 0.2),
-    0 0 100px rgba(255, 0, 255, 0.1),
-    inset 0 0 50px rgba(255, 255, 255, 0.05);
-  max-width: 500px;
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  max-width: 480px;
   margin: 0 auto;
-  position: relative;
-  animation: grid-entrance 1s ease-out;
+  backdrop-filter: blur(10px);
 }
 
-@keyframes grid-entrance {
-  from {
-    opacity: 0;
-    transform: scale(0.8) rotateY(10deg);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) rotateY(0deg);
-  }
-}
-
-.sudoku-grid::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00, #00ffff);
-  border-radius: 22px;
-  z-index: -1;
-  animation: border-glow 3s linear infinite;
-}
-
-@keyframes border-glow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* ⚡ EPIC SUDOKU CELLS ⚡ */
+/* 🎯 CLEAN SUDOKU CELLS 🎯 */
 .sudoku-cell {
   width: 50px;
   height: 50px;
-  background: 
-    linear-gradient(145deg, rgba(15, 15, 35, 0.9), rgba(25, 25, 45, 0.9));
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
-  font-family: 'Orbitron', monospace;
+  color: #1e40af;
   font-size: 22px;
   font-weight: 700;
   cursor: pointer;
   position: relative;
-  border: 1px solid rgba(0, 255, 255, 0.2);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 
-    0 4px 15px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-.sudoku-cell::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(45deg, transparent, rgba(0, 255, 255, 0.1), transparent);
-  border-radius: 10px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .sudoku-cell:hover {
-  transform: translateY(-8px) scale(1.05);
-  background: 
-    linear-gradient(145deg, rgba(25, 25, 55, 0.95), rgba(35, 35, 65, 0.95));
-  box-shadow: 
-    0 15px 35px rgba(0, 255, 255, 0.3),
-    0 5px 15px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  border-color: rgba(0, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.sudoku-cell:hover::before {
-  opacity: 1;
-}
-
+/* 🎯 SELEZIONE CELLE 🎯 */
 .sudoku-cell.selected {
-  background: 
-    linear-gradient(145deg, rgba(0, 255, 255, 0.95), rgba(0, 200, 255, 0.95)) !important;
-  color: #000 !important;
-  transform: translateY(-5px) scale(1.1) !important;
-  box-shadow: 
-    0 0 30px rgba(0, 255, 255, 0.9),
-    0 0 60px rgba(0, 255, 255, 0.6),
-    0 15px 35px rgba(0, 255, 255, 0.4),
-    inset 0 0 20px rgba(255, 255, 255, 0.3) !important;
-  border: 3px solid rgba(0, 255, 255, 1) !important;
-  animation: selected-pulse 2s ease-in-out infinite;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-  z-index: 10;
-  position: relative;
-}
-
-@keyframes selected-pulse {
-  0%, 100% { 
-    box-shadow: 
-      0 0 30px rgba(0, 255, 255, 0.9),
-      0 0 60px rgba(0, 255, 255, 0.6),
-      0 15px 35px rgba(0, 255, 255, 0.4);
-    transform: translateY(-5px) scale(1.1);
-  }
-  50% { 
-    box-shadow: 
-      0 0 50px rgba(0, 255, 255, 1),
-      0 0 100px rgba(0, 255, 255, 0.8),
-      0 20px 40px rgba(0, 255, 255, 0.5);
-    transform: translateY(-7px) scale(1.12);
-  }
+  background: #3b82f6 !important;
+  color: white !important;
+  border: 2px solid #1e40af !important;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.5) !important;
+  transform: scale(1.05) !important;
 }
 
 .sudoku-cell.highlighted {
-  background: 
-    linear-gradient(145deg, rgba(255, 215, 0, 0.95), rgba(255, 140, 0, 0.95)) !important;
-  color: #000 !important;
-  transform: translateY(-3px) scale(1.08) !important;
-  animation: highlight-dance 1.5s ease-in-out infinite;
-  box-shadow: 
-    0 0 30px rgba(255, 215, 0, 0.9),
-    0 0 50px rgba(255, 140, 0, 0.6),
-    0 10px 25px rgba(255, 140, 0, 0.4),
-    inset 0 0 15px rgba(255, 255, 255, 0.4) !important;
-  border: 3px solid rgba(255, 215, 0, 1) !important;
-  text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
-  z-index: 8;
-  position: relative;
+  background: #f59e0b !important;
+  color: white !important;
+  border: 2px solid #d97706 !important;
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.5) !important;
 }
 
-@keyframes highlight-dance {
-  0%, 100% { 
-    transform: translateY(-3px) scale(1.08) rotate(0deg);
-    box-shadow: 
-      0 0 30px rgba(255, 215, 0, 0.9),
-      0 0 50px rgba(255, 140, 0, 0.6),
-      0 10px 25px rgba(255, 140, 0, 0.4);
-  }
-  25% { 
-    transform: translateY(-6px) scale(1.12) rotate(2deg);
-    box-shadow: 
-      0 0 40px rgba(255, 215, 0, 1),
-      0 0 70px rgba(255, 140, 0, 0.8),
-      0 15px 30px rgba(255, 140, 0, 0.5);
-  }
-  75% { 
-    transform: translateY(-2px) scale(1.06) rotate(-2deg);
-    box-shadow: 
-      0 0 35px rgba(255, 215, 0, 0.95),
-      0 0 60px rgba(255, 140, 0, 0.7),
-      0 12px 28px rgba(255, 140, 0, 0.45);
-  }
-}
-
-/* 🌟 EPIC 3x3 SECTION BORDERS 🌟 */
+/* 🔲 BORDI 3x3 SEZIONI 🔲 */
 .sudoku-cell:nth-child(3n):not(:nth-child(9n)) {
-  margin-right: 6px;
-  border-right: 3px solid rgba(0, 255, 255, 0.5);
+  margin-right: 4px;
+  border-right: 2px solid rgba(255, 255, 255, 0.4);
 }
 
 .sudoku-cell:nth-child(9n+1):not(:first-child) {
-  margin-left: 6px;
-  border-left: 3px solid rgba(0, 255, 255, 0.5);
+  margin-left: 4px;
+  border-left: 2px solid rgba(255, 255, 255, 0.4);
 }
 
 .sudoku-cell:nth-child(n+1):nth-child(-n+9) {
-  margin-top: 6px;
-  border-top: 3px solid rgba(0, 255, 255, 0.5);
+  margin-top: 4px;
+  border-top: 2px solid rgba(255, 255, 255, 0.4);
 }
 
 .sudoku-cell:nth-child(n+19):nth-child(-n+27),
 .sudoku-cell:nth-child(n+46):nth-child(-n+54) {
-  margin-bottom: 6px;
-  border-bottom: 3px solid rgba(0, 255, 255, 0.5);
+  margin-bottom: 4px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.4);
 }
 
-/* 💎 EPIC CAGE SUM 💎 */
+/* 🏷️ SOMME GABBIE 🏷️ */
 .cage-sum {
   position: absolute;
-  top: 3px;
-  left: 4px;
-  font-family: 'Orbitron', monospace;
+  top: 2px;
+  left: 3px;
   font-size: 10px;
-  font-weight: 800;
-  color: #000;
-  background: 
-    linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 240, 255, 0.95));
-  padding: 2px 4px;
-  border-radius: 6px;
+  font-weight: 700;
+  color: #1e40af;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 1px 3px;
+  border-radius: 3px;
   line-height: 1;
-  box-shadow: 
-    0 2px 8px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  animation: cage-glow 3s ease-in-out infinite;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-@keyframes cage-glow {
-  0%, 100% { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); }
-  50% { box-shadow: 0 2px 15px rgba(0, 255, 255, 0.4); }
-}
-
-/* 🔥 EPIC INPUT 🔥 */
+/* � INPUT INLINE � */
 .inline-input {
   width: 100%;
   height: 100%;
-  background: 
-    linear-gradient(145deg, rgba(0, 0, 0, 0.8), rgba(20, 20, 40, 0.8));
-  color: #00ffff;
+  background: rgba(30, 64, 175, 0.9);
+  color: white;
   text-align: center;
-  font-family: 'Orbitron', monospace;
-  font-size: 18px;
-  font-weight: 700;
-  border: 2px solid #00ffff;
-  border-radius: 8px;
-  outline: none;
-  backdrop-filter: blur(10px);
-  animation: input-pulse 2s ease-in-out infinite;
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
-}
-
-@keyframes input-pulse {
-  0%, 100% { 
-    border-color: #00ffff;
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-  }
-  50% { 
-    border-color: #ff00ff;
-    box-shadow: 0 0 25px rgba(255, 0, 255, 0.7);
-  }
-}
-
-/* 🎨 EPIC CONTROL PANEL 🎨 */
-.epic-panel {
-  background: 
-    linear-gradient(145deg, rgba(15, 15, 35, 0.85), rgba(25, 25, 50, 0.85));
-  backdrop-filter: blur(25px);
-  border-radius: 25px;
-  border: 2px solid rgba(0, 255, 255, 0.3);
-  box-shadow: 
-    0 25px 50px rgba(0, 0, 0, 0.5),
-    0 0 100px rgba(0, 255, 255, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  position: relative;
-  overflow: hidden;
-}
-
-.epic-panel::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  animation: panel-shine 3s ease-in-out infinite;
-}
-
-@keyframes panel-shine {
-  0% { left: -100%; }
-  100% { left: 100%; }
-}
-
-/* 🚀 EPIC BUTTONS 🚀 */
-.epic-btn {
-  background: linear-gradient(145deg, rgba(0, 255, 255, 0.8), rgba(0, 150, 255, 0.8));
-  border: none;
-  border-radius: 15px;
-  color: #000;
-  font-family: 'Rajdhani', sans-serif;
-  font-weight: 700;
   font-size: 16px;
+  font-weight: 700;
+  border: 2px solid #3b82f6;
+  border-radius: 6px;
+  outline: none;
+}
+
+/* �️ PANNELLO CONTROLLO �️ */
+.epic-panel {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Buttons */
+.btn {
+  background: #3b82f6;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position: relative;
-  overflow: hidden;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 
-    0 8px 25px rgba(0, 255, 255, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s ease;
+  margin: 0.25rem;
 }
 
-.epic-btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-  transition: left 0.5s ease;
+.btn:hover:not(:disabled) {
+  background: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
 }
 
-.epic-btn:hover:not(:disabled) {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 
-    0 15px 35px rgba(0, 255, 255, 0.4),
-    0 0 50px rgba(0, 255, 255, 0.3);
-  background: linear-gradient(145deg, rgba(0, 255, 255, 1), rgba(0, 200, 255, 1));
+.btn:active {
+  transform: translateY(0);
 }
 
-.epic-btn:hover:not(:disabled)::before {
-  left: 100%;
-}
-
-.epic-btn:active {
-  transform: translateY(-1px) scale(1.02);
-}
-
-.epic-btn:disabled {
-  background: linear-gradient(145deg, rgba(100, 100, 100, 0.5), rgba(80, 80, 80, 0.5));
-  color: rgba(255, 255, 255, 0.5);
+.btn:disabled {
+  background: #9ca3af;
+  color: #6b7280;
   cursor: not-allowed;
   box-shadow: none;
 }
 
-/* 🎵 EPIC TITLE 🎵 */
-.epic-title {
-  font-family: 'Orbitron', monospace;
-  font-weight: 900;
-  font-size: 3rem;
-  background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00, #00ffff);
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: epic-title-glow 3s ease-in-out infinite;
-  text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-  letter-spacing: 3px;
+/* App Title */
+.app-title {
+  font-size: 2.5rem;
+  font-weight: 700;
   text-align: center;
   margin-bottom: 2rem;
-}
-
-@keyframes epic-title-glow {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  color: #2d3748;
+  letter-spacing: 0.05em;
 }
 
 /* � DEBUG STYLES 🔧 */
@@ -424,7 +199,7 @@ body::before {
   border: 5px solid orange !important;
 }
 
-/* �📱 EPIC RESPONSIVE 📱 */
+/* Responsive Design */
 @media (min-width: 768px) {
   .sudoku-cell {
     width: 58px;
@@ -443,8 +218,8 @@ body::before {
     left: 5px;
   }
   
-  .epic-title {
-    font-size: 4rem;
+  .app-title {
+    font-size: 3rem;
   }
 }
 

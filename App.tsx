@@ -212,8 +212,8 @@ const App = () => {
     const cellsToHighlight = hoveredCageIndex !== null ? cages[hoveredCageIndex].cells : [];
 
     return (
-        <div className="min-h-screen text-white flex flex-col items-center justify-center p-4">
-            <h1 className="epic-title mb-8">
+        <div className="min-h-screen text-gray-900 flex flex-col items-center justify-center p-4">
+            <h1 className="app-title mb-8">
                 ⚔️ KILLER SUDOKU ⚔️
             </h1>
             <main className="flex flex-col md:flex-row gap-8 w-full max-w-7xl">
@@ -258,7 +258,7 @@ const App = () => {
                     </div>
                 </div>
 
-                <div className="w-full md:w-96 p-8 epic-panel">
+                <div className="w-full md:w-96 control-panel">
                     <h1 className="text-4xl font-bold mb-6 text-center bg-gradient-to-r from-blue-400 via-purple-500 to-blue-600 bg-clip-text text-transparent">
                         ⚔️ Killer Sudoku
                     </h1>
@@ -266,19 +266,19 @@ const App = () => {
                     <div className="space-y-4 mb-6">
                         <button 
                             onClick={handleAddOrUpdateCage}
-                            className="w-full epic-btn py-4 px-6"
+                            className="w-full btn"
                             disabled={isLoading || currentSelection.length === 0}
                         >
                             {editingCageIndex !== null ? 'Aggiorna Gabbia' : 'Aggiungi Gabbia'}
                         </button>
                         {editingCageIndex !== null && (
-                            <button onClick={handleCancelEdit} className="w-full epic-btn py-4 px-6" style={{background: 'linear-gradient(145deg, rgba(150, 150, 150, 0.8), rgba(120, 120, 120, 0.8))'}}>
+                            <button onClick={handleCancelEdit} className="w-full btn" style={{background: '#6b7280'}}>
                                 Annulla Modifica
                             </button>
                         )}
                     </div>
                     
-                    <div className="h-40 overflow-y-auto mb-4 p-2 bg-black bg-opacity-20 rounded-lg">
+                    <div className="h-40 overflow-y-auto mb-4 p-2 bg-gray-50 border border-gray-200 rounded-lg">
                         {cages.map((cage, index) => (
                             <div 
                                 key={index}
@@ -291,7 +291,7 @@ const App = () => {
                                     <span>Somma: {cage.sum} ({cage.cells.length} celle)</span>
                                 </div>
                                 <div>
-                                    <button onClick={() => handleEditCage(index)} className="p-1 text-gray-400 hover:text-white"><PencilIcon className="w-5 h-5"/></button>
+                                    <button onClick={() => handleEditCage(index)} className="p-1 text-gray-600 hover:text-gray-900"><PencilIcon className="w-5 h-5"/></button>
                                     <button onClick={() => handleDeleteCage(index)} className="p-1 text-gray-400 hover:text-red-500"><TrashIcon className="w-5 h-5"/></button>
                                 </div>
                             </div>
@@ -300,11 +300,11 @@ const App = () => {
 
                     <div className="space-y-4">
                         <div className="flex items-center space-x-2">
-                            <select value={solveMode} onChange={(e) => setSolveMode(e.target.value as 'instant' | 'step')} className="bg-gray-700 bg-opacity-80 backdrop-filter backdrop-blur-lg text-white p-3 rounded-lg w-full border border-gray-600 focus:border-blue-400 outline-none transition-colors">
+                            <select value={solveMode} onChange={(e) => setSolveMode(e.target.value as 'instant' | 'step')} className="bg-white text-gray-900 p-3 rounded-lg w-full border border-gray-300 focus:border-blue-500 outline-none transition-colors">
                                 <option value="instant">⚡ Risoluzione Immediata</option>
                                 <option value="step">👣 Passo Dopo Passo</option>
                             </select>
-                            <button onClick={handleSolve} disabled={isLoading || cages.length === 0} className="p-3 glass-button rounded-lg transition-colors" style={{background: 'linear-gradient(145deg, rgba(34, 197, 94, 0.8), rgba(22, 163, 74, 0.8))'}}><MagicWandIcon className="w-6 h-6"/></button>
+                            <button onClick={handleSolve} disabled={isLoading || cages.length === 0} className="btn" style={{background: '#22c55e'}}><MagicWandIcon className="w-6 h-6"/></button>
                         </div>
                         
                         {isLoading && <Spinner />}
@@ -314,12 +314,12 @@ const App = () => {
                             <div className="bg-gray-800 bg-opacity-60 backdrop-filter backdrop-blur-lg p-4 rounded-lg border border-gray-600">
                                 <p className="text-center mb-2">Svelati: {revealedCells.length} / 81</p>
                                 <div className="flex space-x-2">
-                                    <button onClick={handleStep} disabled={revealedCells.length >= 81} className="w-full glass-button flex items-center justify-center gap-2 py-3 px-4 rounded-lg" style={{background: 'linear-gradient(145deg, rgba(99, 102, 241, 0.8), rgba(79, 70, 229, 0.8))'}}><StepForwardIcon className="w-5 h-5"/>Prossimo</button>
-                                    <button onClick={handleRevealAll} className="w-full glass-button flex items-center justify-center gap-2 py-3 px-4 rounded-lg" style={{background: 'linear-gradient(145deg, rgba(147, 51, 234, 0.8), rgba(126, 34, 206, 0.8))'}}><EyeIcon className="w-5 h-5"/>Rivela Tutto</button>
+                                    <button onClick={handleStep} disabled={revealedCells.length >= 81} className="w-full btn flex items-center justify-center gap-2" style={{background: '#6366f1'}}><StepForwardIcon className="w-5 h-5"/>Prossimo</button>
+                                    <button onClick={handleRevealAll} className="w-full btn flex items-center justify-center gap-2" style={{background: '#9333ea'}}><EyeIcon className="w-5 h-5"/>Rivela Tutto</button>
                                 </div>
                             </div>
                         )}
-                        <button onClick={handleClear} className="w-full glass-button text-white font-bold py-3 px-4 rounded-lg" style={{background: 'linear-gradient(145deg, rgba(239, 68, 68, 0.8), rgba(220, 38, 38, 0.8))'}}>
+                        <button onClick={handleClear} className="w-full btn text-white font-bold" style={{background: '#ef4444'}}>
                             Pulisci Tutto
                         </button>
                     </div>
